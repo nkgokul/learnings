@@ -1,0 +1,43 @@
+<head>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+  
+  <div id="graph"></div>
+  <script>
+    <!-- JAVASCRIPT CODE GOES HERE -->
+var colorscaleValue = [
+  [1, '#000000'],
+  [0.5, '#777777'],  
+  [0, '#ffffff']
+];
+
+var data = [
+  {
+     x: [1,2,3,4,5,6,7,8,9,10],
+     y: [10,20,30,40,50,60,70,80,90,100],
+     type:"heatmap",
+     colorscale: colorscaleValue,,
+     //reversescale: true,
+     showscale: false
+  }
+];
+
+zArray = new Array(2);
+
+for(x=0; x<=9; x++) {
+		zArray[x]=[];
+		for (y=0; y<=9; y++){;
+				zArray[x][y] = 0;
+				}
+}
+
+console.log(zArray);
+data[0].z = zArray;
+
+Plotly.newPlot('graph', data);
+
+  </script>
+</body>

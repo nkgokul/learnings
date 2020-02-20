@@ -1,0 +1,91 @@
+<head>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+
+<body>
+  
+  <div id="graph" style="width:600px;height:600px;"></div>
+  <script>
+    <!-- JAVASCRIPT CODE GOES HERE -->
+var colorscaleValue = [
+  [1, '#000000'],
+  [0.5, '#777777'],  
+  [0, '#ffffff']
+];
+
+var colourScaleArray = ['Blackbody',
+'Bluered',
+'Blues',
+'Earth',
+'Electric',
+'Greens',
+'Greys',
+'Hot',
+'Jet',
+'Picnic',
+'Portland',
+'Rainbow',
+'RdBu',
+'Reds',
+'Viridis',
+'YlGnBu',
+'YlOrRd'];
+
+
+
+function initialise(squareSize = 10) {
+    var xAxis = Array.from(Array(squareSize), (d, i) => i);
+    var yAxis = Array.from(Array(squareSize), (d, i) => i);
+    var zAxis = new Array(2);
+    for(x=0; x<squareSize; x++) {
+        zAxis[x]=[];
+            for (y=0; y<squareSize; y++){;
+                zAxis[x][y] = 0;
+                    }
+    }
+
+    data = [
+    {
+        x: xAxis,
+        y: yAxis,
+        z: zAxis,
+        type:"heatmap",
+        //colorscale: colorscaleValue,
+        colorscale: "Reds",
+        //reversescale: true,
+        showscale: true,
+        height:800,
+        width:800,
+        title:"How random is random really?"
+    }
+    ];
+    Plotly.newPlot('graph', data);
+}
+
+function generateRandomNumberAndUpdatePlot(squareSize = 10) {
+    var smoothness = 5/squareSize*squareSize;
+    var rand = Math.floor(Math.random() * squareSize * squareSize);
+    data[0].z[rand%squareSize][Math.floor(rand/squareSize)] = data[0].z[rand%squareSize][Math.floor(rand/squareSize)] + 1;
+    Plotly.animate('graph', {
+        data: [data[0]],
+        traces: [0],
+        layout: {}
+      }, {
+        transition: {
+          duration: smoothness,
+          easing: 'cubic-in-out'
+        },
+        frame: {
+          duration: smoothness
+        }
+      })
+}
+
+var squareSize = Math.ceil(Math.random() * 20);
+var data;
+initialise(squareSize);
+var randomNuymberGenerationDuration = (5/squareSize^2);
+var timeout = setInterval(function(){generateRandomNumberAndUpdatePlot(squareSize);}, randomNuymberGenerationDuration);
+  </script>
+</body>
